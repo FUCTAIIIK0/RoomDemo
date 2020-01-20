@@ -43,7 +43,6 @@ public class TestDto {
     public String getRegSerial() {
         return regSerial;
     }
-
     public void setRegSerial(String regSerial) {
         this.regSerial = regSerial;
     }
@@ -51,7 +50,6 @@ public class TestDto {
     public Boolean getOnline() {
         return isOnline;
     }
-
     public void setOnline(Boolean online) {
         isOnline = online;
     }
@@ -59,7 +57,6 @@ public class TestDto {
     public String getUserID() {
         return userID;
     }
-
     public void setUserID(String userID) {
         this.userID = userID;
     }
@@ -67,7 +64,6 @@ public class TestDto {
     public String getCityID() {
         return cityID;
     }
-
     public void setCityID(String cityID) {
         this.cityID = cityID;
     }
@@ -75,7 +71,6 @@ public class TestDto {
     public String getCompanyID() {
         return companyID;
     }
-
     public void setCompanyID(String companyID) {
         this.companyID = companyID;
     }
@@ -83,7 +78,6 @@ public class TestDto {
     public String getDriverNum() {
         return driverNum;
     }
-
     public void setDriverNum(String driverNum) {
         this.driverNum = driverNum;
     }
@@ -91,7 +85,6 @@ public class TestDto {
     public String getDriverSeries() {
         return driverSeries;
     }
-
     public void setDriverSeries(String driverSeries) {
         this.driverSeries = driverSeries;
     }
@@ -99,7 +92,6 @@ public class TestDto {
     public Boolean getDriverA() {
         return driverA;
     }
-
     public void setDriverA(Boolean driverA) {
         this.driverA = driverA;
     }
@@ -107,7 +99,6 @@ public class TestDto {
     public Boolean getDriverB() {
         return driverB;
     }
-
     public void setDriverB(Boolean driverB) {
         this.driverB = driverB;
     }
@@ -115,7 +106,6 @@ public class TestDto {
     public Boolean getDriverC() {
         return driverC;
     }
-
     public void setDriverC(Boolean driverC) {
         this.driverC = driverC;
     }
@@ -123,7 +113,6 @@ public class TestDto {
     public Boolean getDriverD() {
         return driverD;
     }
-
     public void setDriverD(Boolean driverD) {
         this.driverD = driverD;
     }
@@ -131,7 +120,6 @@ public class TestDto {
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -139,7 +127,6 @@ public class TestDto {
     public String getMidleName() {
         return midleName;
     }
-
     public void setMidleName(String midleName) {
         this.midleName = midleName;
     }
@@ -147,7 +134,6 @@ public class TestDto {
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -155,7 +141,6 @@ public class TestDto {
     public String getPassportNum() {
         return passportNum;
     }
-
     public void setPassportNum(String passportNum) {
         this.passportNum = passportNum;
     }
@@ -163,7 +148,6 @@ public class TestDto {
     public String getPasportSeries() {
         return pasportSeries;
     }
-
     public void setPasportSeries(String pasportSeries) {
         this.pasportSeries = pasportSeries;
     }
@@ -171,7 +155,6 @@ public class TestDto {
     public String getPasportIssue() {
         return pasportIssue;
     }
-
     public void setPasportIssue(String pasportIssue) {
         this.pasportIssue = pasportIssue;
     }
