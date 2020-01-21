@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_companyID)
     EditText companyIDEdit;
     String companyID;
+
+    @BindView(R.id.main_output)
+    TextView outputText;
+    String output;
 
     @BindView(R.id.main_addBtn)
     Button addBtn;
@@ -92,6 +97,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void getAllUsers() {
         List<UserDTO> userDTOList = MainActivity.testDatabase.testDao().getAll();
+        String info = " ";
+        for (UserDTO user : userDTOList){
+            int id = user.getUid();
+            String firstName = user.getFirstName();
+            String lastName = user.getLastName();
+            String cityID = user.getCityID();
+            String companyID = user.getCompanyID();
+
+            info = info+"\n\n"+
+                    "id "+id+"\n"+
+                    "firstname "+firstName+"\n"+
+                    "lastname "+lastName+"\n"+
+                    "CityID "+cityID+"\n"+
+                    "company "+companyID+"\n";
+            Log.d("Main", info);
+
+            outputText.setText(info);
+
+        }
 
     }
 
