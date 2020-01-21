@@ -12,9 +12,8 @@ public interface Dao {
     @Query("SELECT * FROM USER")
     List<UserDTO> getAll();
 
-    @Query("SELECT * FROM USER WHERE uid = :id")
-    UserDTO getById(long id);
-
+//    @Query("SELECT * FROM USER WHERE uid = :id")
+//    UserDTO getById(long id);
     @Insert
     void addUser(UserDTO userDTO);
 
