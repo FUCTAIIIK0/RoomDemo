@@ -7,8 +7,8 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="258dp"
-        android:layout_height="380dp"
+        android:layout_width="280dp"
+        android:layout_height="448dp"
         android:orientation="vertical">
 
         <TextView
@@ -17,26 +17,29 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="0"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <EditText
             android:id="@+id/main_firstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:autoText="false"
             android:ems="10"
             android:hint="firstName"
             android:inputType="textPersonName"
+            android:text="John"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/main_lastName"
+            android:id="@+id/main_mainLastname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:hint="lastname"
             android:inputType="textPersonName"
+            android:text="Osterman"
             android:textSize="18sp" />
 
         <EditText
@@ -47,6 +50,7 @@
             android:ems="10"
             android:hint="CityID"
             android:inputType="textPersonName"
+            android:text="Mars"
             android:textSize="18sp" />
 
         <EditText
@@ -57,6 +61,7 @@
             android:ems="10"
             android:hint="CompanyID"
             android:inputType="textPersonName"
+            android:text="Watchmen"
             android:textSize="18sp" />
 
         <Button
@@ -64,7 +69,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="add User" />
+            android:text="add User"/>
+
+        <Button
+            android:id="@+id/main_getFirst"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="get first"/>
+
+        <Button
+            android:id="@+id/main_getAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="get all" />
     </LinearLayout>
 
 </RelativeLayout>

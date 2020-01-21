@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 public class UserDTO {
 
     @NotNull
-    @PrimaryKey
-    private String id;
+    @PrimaryKey(autoGenerate = true)
+    private int uid;
 
     @ColumnInfo(name = "firstName")
     private String firstName;
@@ -30,16 +30,16 @@ public class UserDTO {
 
 
 
-    public UserDTO(String id) {
-        this.id = id;
+    public UserDTO() {
+
     }
 
 
-    public String getId() {
-        return id;
+    public int getUid() {
+        return uid;
     }
-    public void setId(String id) {
-        this.id = id;
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
     public Boolean getOnline() {

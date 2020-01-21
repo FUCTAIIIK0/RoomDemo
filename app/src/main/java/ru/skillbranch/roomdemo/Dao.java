@@ -9,18 +9,18 @@ import java.util.List;
 
 @androidx.room.Dao
 public interface Dao {
-//    @Query("SELECT * FROM UserDTO")
-//    List<UserDTO> getAll();
-//
-//    @Query("SELECT * FROM UserDTO WHERE id = :id")
-//    UserDTO getById(long id);
+    @Query("SELECT * FROM USER")
+    List<UserDTO> getAll();
+
+    @Query("SELECT * FROM USER WHERE uid = :id")
+    UserDTO getById(long id);
 
     @Insert
-    void insert(UserDTO employee);
+    void addUser(UserDTO userDTO);
 
     @Update
-    void update(UserDTO employee);
+    void update(UserDTO userDTO);
 
     @Delete
-    void delete(UserDTO employee);
+    void delete(UserDTO userDTO);
 }
