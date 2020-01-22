@@ -7,9 +7,8 @@ import androidx.room.Query;
 import java.util.List;
 
 import ru.skillbranch.roomdemo.dto.RecordDTO;
-import ru.skillbranch.roomdemo.dto.UserDTO;
 
-@androidx.room.Dao
+@Dao
 public interface RecordDao {
     @Insert
     RecordDTO add(RecordDTO recordDTO);

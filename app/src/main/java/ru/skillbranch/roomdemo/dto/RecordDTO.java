@@ -4,44 +4,45 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Date;
 
 @Entity(tableName = "objects")
 public class RecordDTO {
+
+    @NotNull
     @PrimaryKey(autoGenerate = true)
-    private Long id;
+    private int id;
 
     @ColumnInfo(name = "added")
-    private Date added;
+    private String added;
 
     @ColumnInfo(name = "serializeObject")
     private String serializeObject;
 
-    public RecordDTO(Long id, Date added, String object) {
-        this.id = id;
-        this.added = added;
-        this.setObject(object);
+    public RecordDTO() {
     }
 
-    public Long getId() {
+
+    public int getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Date getAdded() {
+    public String getAdded() {
         return added;
     }
-    public void setAdded(Date added) {
+    public void setAdded(String added) {
         this.added = added;
     }
 
-    public String getObject() {
+    public String getSerializeObject() {
         return serializeObject;
     }
-
-    public void setObject(String object) {
+    public void setSerializeObject(String serializeObject) {
         this.serializeObject = serializeObject;
     }
 }
