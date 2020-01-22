@@ -1,4 +1,4 @@
-package ru.skillbranch.roomdemo;
+package ru.skillbranch.roomdemo.dto;
 
 import java.util.Date;
 

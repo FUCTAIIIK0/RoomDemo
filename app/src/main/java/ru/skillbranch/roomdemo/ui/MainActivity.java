@@ -1,4 +1,4 @@
-package ru.skillbranch.roomdemo;
+package ru.skillbranch.roomdemo.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -10,10 +10,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.skillbranch.roomdemo.R;
+import ru.skillbranch.roomdemo.demo.Dao;
+import ru.skillbranch.roomdemo.demo.Demo1Database;
+import ru.skillbranch.roomdemo.demo2.RecordDB;
+import ru.skillbranch.roomdemo.demo2.RecordDao;
+import ru.skillbranch.roomdemo.dto.RecordDTO;
+import ru.skillbranch.roomdemo.dto.UserDTO;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_id)
@@ -53,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
     Button getAllUsersBtn;
 
     //db
-    public static TestDatabase testDatabase;
+    public static Demo1Database demo1Database;
+    public static RecordDB recordDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         initDB();
 
         addUserBtn.setOnClickListener(view -> {
@@ -92,21 +101,26 @@ public class MainActivity extends AppCompatActivity {
         getAllUsersBtn.setOnClickListener(view -> {
             getAllUsers();
         });
-
-
     }
 
     private void addUser(UserDTO userDTO) {
-        Dao dao = testDatabase.testDao();
+        Dao dao = demo1Database.testDao();
         dao.addUser(userDTO);
 
-        //MainActivity.testDatabase.testDao().addUser(userDTO);
-        Toast.makeText(getApplicationContext(), "User added to DB successfully", Toast.LENGTH_LONG).show();
 
+        //MainActivity.demo1Database.testDao().addUser(userDTO);
+        Toast.makeText(getApplicationContext(), "User added to DB successfully", Toast.LENGTH_LONG).show();
+    }
+    private void addRecordDTo(){
+        Date currentDate = Calendar.getInstance().getTime();
+        RecordDTO recordDTO = new RecordDTO((long) 0, currentDate ,"testString");
+
+        RecordDao recordDao = (RecordDao) recordDB.iManager();
+        recordDao.add(recordDTO);
     }
 
     private void getAllUsers() {
-        List<UserDTO> userDTOList = MainActivity.testDatabase.testDao().getAll();
+        List<UserDTO> userDTOList = MainActivity.demo1Database.testDao().getAll();
         String info = " ";
         for (UserDTO user : userDTOList){
             int id = user.getUid();
@@ -128,15 +142,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
     private void getFirstUser() {
 
     }
-
     private void initDB() {
         //TODO Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
         // Change allowMainThreadQueries!!!
-        testDatabase = Room.databaseBuilder(getApplicationContext(), TestDatabase.class, "userDB").allowMainThreadQueries().build();
+        demo1Database = Room.databaseBuilder(getApplicationContext(),
+                Demo1Database.class, "userDB").allowMainThreadQueries().build();
+
+        recordDB = Room.databaseBuilder(getApplicationContext(),
+                RecordDB.class, "userDB").allowMainThreadQueries().build();
+
 
 
     }

@@ -1,13 +1,23 @@
-package ru.skillbranch.roomdemo.ss;
+package ru.skillbranch.roomdemo.dto;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-public class Record {
+@Entity(tableName = "objects")
+public class RecordDTO {
+    @PrimaryKey(autoGenerate = true)
     private Long id;
+
+    @ColumnInfo(name = "added")
     private Date added;
+
+    @ColumnInfo(name = "serializeObject")
     private String serializeObject;
 
-    public Record(Long id, Date added, Object object) {
+    public RecordDTO(Long id, Date added, Object object) {
         this.id = id;
         this.added = added;
         this.setObject(object);
@@ -16,7 +26,6 @@ public class Record {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -24,7 +33,6 @@ public class Record {
     public Date getAdded() {
         return added;
     }
-
     public void setAdded(Date added) {
         this.added = added;
     }

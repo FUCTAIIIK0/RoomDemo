@@ -1,4 +1,4 @@
-package ru.skillbranch.roomdemo;
+package ru.skillbranch.roomdemo.demo;
 
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -6,6 +6,8 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
+
+import ru.skillbranch.roomdemo.dto.UserDTO;
 
 @androidx.room.Dao
 public interface Dao {
@@ -16,6 +18,8 @@ public interface Dao {
 //    UserDTO getById(long id);
     @Insert
     void addUser(UserDTO userDTO);
+
+
 
     @Update
     void update(UserDTO userDTO);
