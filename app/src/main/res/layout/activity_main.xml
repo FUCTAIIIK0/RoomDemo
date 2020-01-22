@@ -77,11 +77,11 @@
                 android:text="add User" />
 
             <Button
-                android:id="@+id/main_addSosBtn"
+                android:id="@+id/main_addRecordBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="add sos" />
+                android:text="add recordDto" />
 
             <Button
                 android:id="@+id/main_getFirst"
@@ -95,7 +95,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="get all" />
+                android:text="get all users" />
+
+            <Button
+                android:id="@+id/main_getAllRecords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="get all records" />
         </LinearLayout>
 
         <LinearLayout

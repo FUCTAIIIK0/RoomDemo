@@ -17,7 +17,7 @@ public class RecordDTO {
     @ColumnInfo(name = "serializeObject")
     private String serializeObject;
 
-    public RecordDTO(Long id, Date added, Object object) {
+    public RecordDTO(Long id, Date added, String object) {
         this.id = id;
         this.added = added;
         this.setObject(object);
@@ -37,11 +37,11 @@ public class RecordDTO {
         this.added = added;
     }
 
-    public Object getObject() {
+    public String getObject() {
         return serializeObject;
     }
 
-    public void setObject(Object object) {
+    public void setObject(String object) {
         this.serializeObject = serializeObject;
     }
 }

@@ -52,14 +52,17 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_addUserBtn)
     Button addUserBtn;
 
-    @BindView(R.id.main_addSosBtn)
-    Button addSosBtn;
+    @BindView(R.id.main_addRecordBtn)
+    Button addRecordBtn;
 
     @BindView(R.id.main_getFirst)
     Button getFirstUserBtn;
 
     @BindView(R.id.main_getAll)
     Button getAllUsersBtn;
+
+    @BindView(R.id.main_getAllRecords)
+    Button getAddRecordBtn;
 
     //db
     public static Demo1Database demo1Database;
@@ -91,8 +94,9 @@ public class MainActivity extends AppCompatActivity {
             //id.setText(String.valueOf(count));
 
         });
-        addSosBtn.setOnClickListener(view ->{
-
+        addRecordBtn.setOnClickListener(view -> {
+            addRecordDTo();
+            Toast.makeText(getApplicationContext(), "Record added to DB successfully", Toast.LENGTH_LONG).show();
         });
 
         getFirstUserBtn.setOnClickListener(view -> {
@@ -100,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
         });
         getAllUsersBtn.setOnClickListener(view -> {
             getAllUsers();
+        });
+
+        getAddRecordBtn.setOnClickListener(view -> {
+
         });
     }
 
@@ -111,9 +119,10 @@ public class MainActivity extends AppCompatActivity {
         //MainActivity.demo1Database.testDao().addUser(userDTO);
         Toast.makeText(getApplicationContext(), "User added to DB successfully", Toast.LENGTH_LONG).show();
     }
-    private void addRecordDTo(){
+
+    private void addRecordDTo() {
         Date currentDate = Calendar.getInstance().getTime();
-        RecordDTO recordDTO = new RecordDTO((long) 0, currentDate ,"testString");
+        RecordDTO recordDTO = new RecordDTO((long) 0, currentDate, "testString");
 
         RecordDao recordDao = (RecordDao) recordDB.iManager();
         recordDao.add(recordDTO);
@@ -122,19 +131,19 @@ public class MainActivity extends AppCompatActivity {
     private void getAllUsers() {
         List<UserDTO> userDTOList = MainActivity.demo1Database.testDao().getAll();
         String info = " ";
-        for (UserDTO user : userDTOList){
+        for (UserDTO user : userDTOList) {
             int id = user.getUid();
             String firstName = user.getFirstName();
             String lastName = user.getLastName();
             String cityID = user.getCityID();
             String companyID = user.getCompanyID();
 
-            info = info+"\n\n"+
-                    "id "+id+"\n"+
-                    "firstname "+firstName+"\n"+
-                    "lastname "+lastName+"\n"+
-                    "CityID "+cityID+"\n"+
-                    "company "+companyID+"\n";
+            info = info + "\n\n" +
+                    "id " + id + "\n" +
+                    "firstname " + firstName + "\n" +
+                    "lastname " + lastName + "\n" +
+                    "CityID " + cityID + "\n" +
+                    "company " + companyID + "\n";
             Log.d("Main", info);
 
             outputText.setText(info);
@@ -142,9 +151,37 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    private void getAllRecords() {
+        RecordDao recordDao = (RecordDao) recordDB.iManager();
+
+        List<RecordDTO> recordDTOList = recordDao.getAll();
+
+        String info = "";
+        for (RecordDTO recordDTO : recordDTOList){
+            long id = recordDTO.getId();
+            Date date = recordDTO.getAdded();
+            String object = recordDTO.getObject();
+
+            info = info + "\n\n" +
+                    "id " + id + "\n" +
+                    "date " + date.toString() + "\n" +
+                    "object " + object + "\n";
+
+            Log.d("Main", info);
+
+            outputText.setText(info);
+
+        }
+
+
+    }
+
     private void getFirstUser() {
 
     }
+
+
     private void initDB() {
         //TODO Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
         // Change allowMainThreadQueries!!!
@@ -153,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
 
         recordDB = Room.databaseBuilder(getApplicationContext(),
                 RecordDB.class, "userDB").allowMainThreadQueries().build();
-
 
 
     }
