@@ -70,11 +70,18 @@
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/main_addBtn"
+                android:id="@+id/main_addUserBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="add User" />
+
+            <Button
+                android:id="@+id/main_addSosBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="add sos" />
 
             <Button
                 android:id="@+id/main_getFirst"

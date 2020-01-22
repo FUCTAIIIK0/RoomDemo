@@ -40,8 +40,11 @@ public class MainActivity extends AppCompatActivity {
     TextView outputText;
     String output;
 
-    @BindView(R.id.main_addBtn)
-    Button addBtn;
+    @BindView(R.id.main_addUserBtn)
+    Button addUserBtn;
+
+    @BindView(R.id.main_addSosBtn)
+    Button addSosBtn;
 
     @BindView(R.id.main_getFirst)
     Button getFirstUserBtn;
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         initDB();
 
-        addBtn.setOnClickListener(view -> {
+        addUserBtn.setOnClickListener(view -> {
             firstName = firstNameEdit.getText().toString();
             lastName = lastNameEdit.getText().toString();
             cityID = cityIDEdit.getText().toString();
@@ -79,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
             //id.setText(String.valueOf(count));
 
         });
+        addSosBtn.setOnClickListener(view ->{
+
+        });
+
         getFirstUserBtn.setOnClickListener(view -> {
             getFirstUser();
         });
