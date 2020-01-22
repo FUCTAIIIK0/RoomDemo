@@ -7,13 +7,16 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import ru.skillbranch.roomdemo.dto.UserDTO;
+
 @androidx.room.Dao
 public interface Dao {
     @Query("SELECT * FROM USER")
     List<UserDTO> getAll();
 
-//    @Query("SELECT * FROM USER WHERE uid = :id")
-//    UserDTO getById(long id);
+    @Query("SELECT * FROM USER WHERE uid = :id")
+    UserDTO getById(long id);
+
     @Insert
     void addUser(UserDTO userDTO);
 

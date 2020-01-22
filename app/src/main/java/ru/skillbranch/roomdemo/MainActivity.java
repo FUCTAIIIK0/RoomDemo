@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_id)
     TextView id;
-    //private int count = 0;
+    private int count = 0;
 
     @BindView(R.id.main_firstName)
     EditText firstNameEdit;
@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
             userDTO.setCompanyID(companyID);
             addUser(userDTO);
 
-            //count++;
+            count++;
             Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
-            //id.setText(String.valueOf(count));
+            id.setText(String.valueOf(count));
 
         });
         getFirstUserBtn.setOnClickListener(view -> {
@@ -90,10 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addUser(UserDTO userDTO) {
-        Dao dao = testDatabase.testDao();
-        dao.addUser(userDTO);
-
-        //MainActivity.testDatabase.testDao().addUser(userDTO);
+        MainActivity.testDatabase.testDao().addUser(userDTO);
         Toast.makeText(getApplicationContext(), "User added to DB successfully", Toast.LENGTH_LONG).show();
 
     }
@@ -130,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
         //TODO Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
         // Change allowMainThreadQueries!!!
         testDatabase = Room.databaseBuilder(getApplicationContext(), TestDatabase.class, "userDB").allowMainThreadQueries().build();
-
 
     }
 

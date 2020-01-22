@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,11 +70,18 @@
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/main_addBtn"
+                android:id="@+id/main_addUserBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="add User" />
+
+            <Button
+                android:id="@+id/main_addRecordBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="add recordDto" />
 
             <Button
                 android:id="@+id/main_getFirst"
@@ -88,7 +95,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="get all" />
+                android:text="get all users" />
+
+            <Button
+                android:id="@+id/main_getAllRecords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="get all records" />
         </LinearLayout>
 
         <LinearLayout
