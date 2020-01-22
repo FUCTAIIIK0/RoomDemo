@@ -1,4 +1,4 @@
-package ru.skillbranch.roomdemo;
+package ru.skillbranch.roomdemo.demo;
 
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -14,11 +14,13 @@ public interface Dao {
     @Query("SELECT * FROM USER")
     List<UserDTO> getAll();
 
-    @Query("SELECT * FROM USER WHERE uid = :id")
-    UserDTO getById(long id);
 
+//    @Query("SELECT * FROM USER WHERE uid = :id")
+//    UserDTO getById(long id);
     @Insert
     void addUser(UserDTO userDTO);
+
+
 
     @Update
     void update(UserDTO userDTO);
