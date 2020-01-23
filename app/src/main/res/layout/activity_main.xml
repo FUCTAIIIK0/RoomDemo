@@ -48,6 +48,13 @@
                 android:textSize="18sp" />
 
             <Button
+                android:id="@+id/main_addObject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="add object" />
+
+            <Button
                 android:id="@+id/main_addRecord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -20,6 +19,7 @@ import ru.skillbranch.roomdemo.R;
 import ru.skillbranch.roomdemo.demo.RecordDao;
 import ru.skillbranch.roomdemo.demo.RecordDatabase;
 import ru.skillbranch.roomdemo.dto.RecordDTO;
+import ru.skillbranch.roomdemo.dto.SosDTO;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_id)
@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_getAllRecords)
     Button getAllUsersBtn;
 
+    @BindView(R.id.main_addObject)
+    Button addObjectbtn;
+
 
     //db
     public static RecordDatabase recordDatabase;
@@ -66,16 +69,20 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            //addUser
+            //addRecord
             RecordDTO recordDTO = new RecordDTO();
             recordDTO.setDate(date);
             recordDTO.setSerializeObject(object);
-            addUser(recordDTO);
+            recordDTO.setObjectType("Object");
+            addRecord(recordDTO);
 
             //count++;
             Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
             //id.setText(String.valueOf(count));
 
+        });
+        addObjectbtn.setOnClickListener(view ->{
+            addObject();
         });
 
         getFirstRecordBtn.setOnClickListener(view -> {
@@ -87,12 +94,38 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void addUser(RecordDTO recordDTO) {
+    private void addObject() {
+        //generate object
+        SosDTO sosDTO = new SosDTO();
+        sosDTO.setUserName("Jhon Osterman");
+        sosDTO.setOnline(true);
+        sosDTO.setDate(Calendar.getInstance().getTime());
+
+        //put object to RecordDTo
+
+        RecordDTO recordDTO = new RecordDTO();
+        recordDTO.setDate(Calendar.getInstance().getTime().toString());
+        recordDTO.setObjectType(sosDTO.getClass().getName());
+        recordDTO.setSerializeObject(convertToRecordDTo(sosDTO));
+
+        addRecord(recordDTO);
+
+
+
+    }
+
+    private void addRecord(RecordDTO recordDTO) {
         RecordDao recordDao = recordDatabase.testDao();
         recordDao.addUser(recordDTO);
-        //MainActivity.recordDatabase.testDao().addUser(recordDTO);
         Toast.makeText(getApplicationContext(), "User added to DB successfully", Toast.LENGTH_LONG).show();
     }
+
+    private String convertToRecordDTo(Object object){
+        String serializeObject ="serializeObject";
+
+        return serializeObject;
+    };
+
 
 //    private void addRecordDTo() {
 //        Date currentDate = Calendar.getInstance().getTime();
@@ -113,11 +146,13 @@ public class MainActivity extends AppCompatActivity {
 
             String date = recordDTO.getDate().toString();
             String object = recordDTO.getSerializeObject();
+            String objectType = recordDTO.getObjectType();
 
             info = info + "\n" +
                     "id " + id + "\n" +
                     "date " + date + "\n" +
-                    "object " + object + "\n";
+                    "object " + object + "\n"+
+                    "object type " + objectType + "\n";
                     Log.d("Main", info);
             outputText.setText(info);
         }
