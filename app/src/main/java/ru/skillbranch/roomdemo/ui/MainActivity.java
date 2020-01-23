@@ -111,7 +111,9 @@ public class MainActivity extends AppCompatActivity {
         RecordDTO recordDTO = new RecordDTO();
         recordDTO.setDate(Calendar.getInstance().getTime().toString());
         recordDTO.setObjectType(sosDTO.getClass().getName());
-        recordDTO.setSerializeObject(convertToRecordDTo(sosDTO));
+        recordDTO.setSerializeObject(convertToJson(sosDTO));
+
+        convertFromRecordDto(recordDTO);
 
         addRecord(recordDTO);
 
@@ -125,13 +127,27 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "User added to DB successfully", Toast.LENGTH_LONG).show();
     }
 
-    private String convertToRecordDTo(Object object){
+    private String convertToJson(Object object){
         String serializeObject ="serializeObject";
         Gson gson = new Gson();
         serializeObject = gson.toJson(object);
-        Log.d(TAG, "convertToRecordDTo: "+serializeObject);
+        Log.d(TAG, "convertToJson: "+serializeObject);
+
 
         return serializeObject;
+    };
+
+    private Object convertFromRecordDto(RecordDTO recordDTO){
+
+        String serializeObject = recordDTO.getSerializeObject();
+        String objectType = recordDTO.getObjectType();
+        Gson gson = new Gson();
+
+        SosDTO restoredDTO = gson.fromJson(serializeObject,SosDTO.class);
+
+        recordDTO.getDate();
+
+      return new Object();
     };
 
 
