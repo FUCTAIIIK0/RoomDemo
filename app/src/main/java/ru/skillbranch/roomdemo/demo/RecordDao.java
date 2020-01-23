@@ -10,7 +10,7 @@ import java.util.List;
 import ru.skillbranch.roomdemo.dto.RecordDTO;
 
 @androidx.room.Dao
-public interface DemoDao {
+public interface RecordDao {
     @Query("SELECT * FROM object")
     List<RecordDTO> getAll();
 

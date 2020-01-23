@@ -25,7 +25,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/main_firstName"
+                android:id="@+id/main_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -33,76 +33,41 @@
                 android:ems="10"
                 android:hint="date"
                 android:inputType="textPersonName"
-                android:text="John"
+                android:text="Date"
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/main_mainLastname"
+                android:id="@+id/main_object"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="lastname"
                 android:inputType="textPersonName"
-                android:text="Osterman"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/main_cityID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="CityID"
-                android:inputType="textPersonName"
-                android:text="Mars"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/main_companyID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="CompanyID"
-                android:inputType="textPersonName"
-                android:text="Watchmen"
+                android:text="object"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/main_addUserBtn"
+                android:id="@+id/main_addRecord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="add User" />
+                android:text="add Record" />
 
             <Button
-                android:id="@+id/main_addRecordBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="add recordDto" />
-
-            <Button
-                android:id="@+id/main_getFirst"
+                android:id="@+id/main_getFirstRecord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="get first" />
 
             <Button
-                android:id="@+id/main_getAll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="get all users" />
-
-            <Button
                 android:id="@+id/main_getAllRecords"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="get all records" />
+                android:text="get all Records" />
+
         </LinearLayout>
 
         <LinearLayout

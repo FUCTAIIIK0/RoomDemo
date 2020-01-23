@@ -15,8 +15,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.skillbranch.roomdemo.R;
-import ru.skillbranch.roomdemo.demo.DemoDao;
-import ru.skillbranch.roomdemo.demo.DemoDatabase;
+import ru.skillbranch.roomdemo.demo.RecordDao;
+import ru.skillbranch.roomdemo.demo.RecordDatabase;
 import ru.skillbranch.roomdemo.dto.RecordDTO;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,43 +24,29 @@ public class MainActivity extends AppCompatActivity {
     TextView id;
     //private int count = 0;
 
-    @BindView(R.id.main_firstName)
-    EditText firstNameEdit;
-    String firstName;
+    @BindView(R.id.main_date)
+    EditText dateEdit;
 
-    @BindView(R.id.main_mainLastname)
-    EditText lastNameEdit;
-    String lastName;
 
-    @BindView(R.id.main_cityID)
-    EditText cityIDEdit;
-    String cityID;
-
-    @BindView(R.id.main_companyID)
-    EditText companyIDEdit;
-    String companyID;
+    @BindView(R.id.main_object)
+    EditText objectEdit;
 
     @BindView(R.id.main_output)
     TextView outputText;
     String output;
 
-    @BindView(R.id.main_addUserBtn)
-    Button addUserBtn;
-
-    @BindView(R.id.main_addRecordBtn)
+    @BindView(R.id.main_addRecord)
     Button addRecordBtn;
 
-    @BindView(R.id.main_getFirst)
-    Button getFirstUserBtn;
-
-    @BindView(R.id.main_getAll)
-    Button getAllUsersBtn;
+    @BindView(R.id.main_getFirstRecord)
+    Button getFirstRecordBtn;
 
     @BindView(R.id.main_getAllRecords)
-    Button getAddRecordBtn;
+    Button getAllUsersBtn;
+
 
     //db
-    public static DemoDatabase demoDatabase;
+    public static RecordDatabase recordDatabase;
     //public static RecordDB recordDB;
 
     @Override
@@ -70,16 +56,16 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initDB();
 
-        addUserBtn.setOnClickListener(view -> {
-            firstName = firstNameEdit.getText().toString();
-            lastName = lastNameEdit.getText().toString();
-            cityID = cityIDEdit.getText().toString();
-            companyID = companyIDEdit.getText().toString();
+        addRecordBtn.setOnClickListener(view -> {
+            String date = dateEdit.getText().toString();
+            String object = objectEdit.getText().toString();
+//            String date = "date";
+//            String object = "object";
 
             //addUser
             RecordDTO recordDTO = new RecordDTO();
-            recordDTO.setDate(firstName);
-            recordDTO.setSerializeObject(lastName);
+            recordDTO.setDate(date);
+            recordDTO.setSerializeObject(object);
             addUser(recordDTO);
 
             //count++;
@@ -87,28 +73,20 @@ public class MainActivity extends AppCompatActivity {
             //id.setText(String.valueOf(count));
 
         });
-        addRecordBtn.setOnClickListener(view -> {
-           // addRecordDTo();
-            Toast.makeText(getApplicationContext(), "Record added to DB successfully", Toast.LENGTH_LONG).show();
-        });
 
-        getFirstUserBtn.setOnClickListener(view -> {
+        getFirstRecordBtn.setOnClickListener(view -> {
 
         });
         getAllUsersBtn.setOnClickListener(view -> {
             getAllUsers();
         });
 
-        getAddRecordBtn.setOnClickListener(view -> {
-           // getAllRecords();
-
-        });
     }
 
     private void addUser(RecordDTO recordDTO) {
-        DemoDao demoDao = demoDatabase.testDao();
-        demoDao.addUser(recordDTO);
-        //MainActivity.demoDatabase.testDao().addUser(recordDTO);
+        RecordDao recordDao = recordDatabase.testDao();
+        recordDao.addUser(recordDTO);
+        //MainActivity.recordDatabase.testDao().addUser(recordDTO);
         Toast.makeText(getApplicationContext(), "User added to DB successfully", Toast.LENGTH_LONG).show();
     }
 
@@ -124,23 +102,19 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     private void getAllUsers() {
-        List<RecordDTO> recordDTOList = MainActivity.demoDatabase.testDao().getAll();
+        List<RecordDTO> recordDTOList = MainActivity.recordDatabase.testDao().getAll();
         String info = " ";
-        for (RecordDTO user : recordDTOList) {
-            int id = user.getUid();
-            String firstName = user.getDate();
-            String lastName = user.getSerializeObject();
+        for (RecordDTO recordDTO : recordDTOList) {
+            int id = recordDTO.getUid();
+            String date = recordDTO.getDate();
+            String object = recordDTO.getSerializeObject();
 
             info = info + "\n\n" +
                     "id " + id + "\n" +
-                    "firstname " + firstName + "\n" +
-                    "lastname " + lastName + "\n" +
-                    "CityID " + cityID + "\n" +
-                    "company " + companyID + "\n";
-            Log.d("Main", info);
-
+                    "date " + date + "\n" +
+                    "object " + object + "\n";
+                    Log.d("Main", info);
             outputText.setText(info);
-
         }
 
     }
@@ -174,12 +148,8 @@ public class MainActivity extends AppCompatActivity {
     private void initDB() {
         //TODO Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
         // Change allowMainThreadQueries!!!
-        demoDatabase = Room.databaseBuilder(getApplicationContext(),
-                DemoDatabase.class, "userDB").allowMainThreadQueries().build();
-
-//        recordDB = Room.databaseBuilder(getApplicationContext(),
-//                RecordDB.class, "userDB").allowMainThreadQueries().build();
-//
+        recordDatabase = Room.databaseBuilder(getApplicationContext(),
+                RecordDatabase.class, "userDB").allowMainThreadQueries().build();
 
     }
 
