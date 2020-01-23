@@ -7,26 +7,29 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import ru.skillbranch.roomdemo.dto.RecordDTO;
+import ru.skillbranch.roomdemo.entity.Record;
 
 @androidx.room.Dao
 public interface RecordDao {
     @Query("SELECT * FROM object")
-    List<RecordDTO> getAll();
+    List<Record> getAll();
 
     @Query("SELECT * FROM object WHERE id = :id")
-    RecordDTO getById(int id);
+    Record getById(int id);
 
     @Query("SELECT *FROM object WHERE id = 1")
-    RecordDTO getFirst();
+    Record getFirstByID();
+
+    @Query("SELECT * FROM object ORDER BY date DESC LIMIT 1")
+    Record getFirstRecordByTime();
 
     @Insert
-    void addRecord(RecordDTO recordDTO);
+    void addRecord(Record record);
 
 
     @Update
-    void update(RecordDTO recordDTO);
+    void update(Record record);
 
     @Delete
-    void delete(RecordDTO recordDTO);
+    void delete(Record record);
 }

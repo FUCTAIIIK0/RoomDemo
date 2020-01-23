@@ -1,14 +1,14 @@
 package ru.skillbranch.roomdemo.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.google.gson.Gson;
 
@@ -21,8 +21,8 @@ import butterknife.ButterKnife;
 import ru.skillbranch.roomdemo.R;
 import ru.skillbranch.roomdemo.demo.RecordDao;
 import ru.skillbranch.roomdemo.demo.RecordDatabase;
-import ru.skillbranch.roomdemo.dto.RecordDTO;
 import ru.skillbranch.roomdemo.dto.SosDTO;
+import ru.skillbranch.roomdemo.entity.Record;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,15 +73,15 @@ public class MainActivity extends AppCompatActivity {
             //String date = dateEdit.getText().toString();
             String object = objectEdit.getText().toString();
 
-            String date = Calendar.getInstance().getTime().toString();
+            int date = (int) Calendar.getInstance().getTime().getTime();
 
 
             //addRecord
-            RecordDTO recordDTO = new RecordDTO();
-            recordDTO.setDate(date);
-            recordDTO.setSerializeObject(object);
-            recordDTO.setObjectType("Object");
-            addRecord(recordDTO);
+            Record record = new Record();
+            record.setDate(date);
+            record.setSerializeObject(object);
+            record.setObjectType("Object");
+            addRecord(record);
 
             //count++;
             Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
@@ -93,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getFirstRecordBtn.setOnClickListener(view -> {
-            getFirstRecord();
+            //getFirstRecordByID();
         });
         dellFirstRecordBtn.setOnClickListener(view ->{
-            dellFirstRecord();
+            dellFirstRecordBYTime();
         });
 
         getAllUsersBtn.setOnClickListener(view -> {
@@ -124,37 +124,38 @@ public class MainActivity extends AppCompatActivity {
 
         //put object to RecordDTo
 
-        RecordDTO recordDTO = new RecordDTO();
-        recordDTO.setDate(Calendar.getInstance().getTime().toString());
-        recordDTO.setObjectType(sosDTO.getClass().getName());
-        recordDTO.setSerializeObject(convertToJson(sosDTO));
+        Record record = new Record();
+        record.setDate((int) Calendar.getInstance().getTime().getTime());
+        record.setObjectType(sosDTO.getClass().getName());
+        record.setSerializeObject(convertToJson(sosDTO));
 
 
 
         try {
-          convertFromRecordDto(recordDTO);
+            convertFromRecordDto(record);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        addRecord(recordDTO);
+        addRecord(record);
 
 
     }
-    private void addRecord(RecordDTO recordDTO) {
+
+    private void addRecord(Record record) {
         RecordDao recordDao = recordDatabase.testDao();
-        recordDao.addRecord(recordDTO);
+        recordDao.addRecord(record);
         Toast.makeText(getApplicationContext(), "User added to DB successfully", Toast.LENGTH_LONG).show();
     }
     private void getAllRecords() {
-        List<RecordDTO> recordDTOList = MainActivity.recordDatabase.testDao().getAll();
+        List<Record> recordList = MainActivity.recordDatabase.testDao().getAll();
         String info = " ";
-        for (RecordDTO recordDTO : recordDTOList) {
-            int id = recordDTO.getId();
+        for (Record record : recordList) {
+            int id = record.getId();
 
-            String date = recordDTO.getDate().toString();
-            String object = recordDTO.getSerializeObject();
-            String objectType = recordDTO.getObjectType();
+            int date = record.getDate();
+            String object = record.getSerializeObject();
+            String objectType = record.getObjectType();
 
             info = info + "\n" +
                     "id " + id + "\n" +
@@ -167,14 +168,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void getFirstRecord(){
-        RecordDTO firstRecordDTO = MainActivity.recordDatabase.testDao().getFirst();
+    //Get first and show to output
+    private Record getFirstRecordByID() {
+        Record firstRecord = MainActivity.recordDatabase.testDao().getFirstByID();
 
-
-        int id = firstRecordDTO.getId();
-        String date = firstRecordDTO.getDate().toString();
-        String object = firstRecordDTO.getSerializeObject();
-        String objectType = firstRecordDTO.getObjectType();
+        int id = firstRecord.getId();
+        int date = firstRecord.getDate();
+        String object = firstRecord.getSerializeObject();
+        String objectType = firstRecord.getObjectType();
 
 
         String info = " ";
@@ -187,9 +188,40 @@ public class MainActivity extends AppCompatActivity {
 
         outputText.setText(info);
 
+        return firstRecord;
+    }
+
+    private Record getFirstRecordByTime() {
+        Record firstRecord = MainActivity.recordDatabase.testDao().getFirstRecordByTime();
+
+        int id = firstRecord.getId();
+        int date = firstRecord.getDate();
+        String object = firstRecord.getSerializeObject();
+        String objectType = firstRecord.getObjectType();
+
+
+        String info = " ";
+        info = info + "\n" +
+                "id " + id + "\n" +
+                "date " + date + "\n" +
+                "object " + object + "\n" +
+                "object type " + objectType + "\n";
+        Log.d("Main", info);
+
+        outputText.setText(info);
+
+        return firstRecord;
+    }
+
+    ;
+
+    private void dellFirstRecordBYTime() {
+        Record firstRecord = getFirstRecordByTime();
+        if (firstRecord != null) {
+            MainActivity.recordDatabase.testDao().delete(firstRecord);
+        }
 
     }
-    private void dellFirstRecord(){}
 
     //lib methods
 
@@ -199,15 +231,15 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "convertToJson: " + serializeObject);
         return serializeObject;
     };
-    private Object convertFromRecordDto(RecordDTO recordDTO) throws ClassNotFoundException {
-        String serializeObject = recordDTO.getSerializeObject();
-        String objectType = recordDTO.getObjectType();
+
+    private Object convertFromRecordDto(Record record) throws ClassNotFoundException {
+        String serializeObject = record.getSerializeObject();
+        String objectType = record.getObjectType();
         Gson gson = new Gson();
 
         //Restore sosDTO
         SosDTO restoredDTO =  gson.fromJson(serializeObject, (Type) Class.forName(objectType));
         restoredDTO.getDate();
-
 
         return new Object();
     };

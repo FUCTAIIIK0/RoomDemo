@@ -1,4 +1,4 @@
-package ru.skillbranch.roomdemo.dto;
+package ru.skillbranch.roomdemo.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -8,14 +8,14 @@ import org.jetbrains.annotations.NotNull;
 
 
 @Entity(tableName = "object")
-public class RecordDTO {
+public class Record {
 
     @NotNull
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     @ColumnInfo(name = "date")
-    private String date;
+    private int date;
 
     @ColumnInfo(name = "serializeObject")
     private String serializeObject;
@@ -23,7 +23,7 @@ public class RecordDTO {
     @ColumnInfo(name = "ObjectType")
     private String objectType;
 
-    public RecordDTO() {
+    public Record() {
 
     }
 
@@ -34,10 +34,11 @@ public class RecordDTO {
         this.id = id;
     }
 
-    public String getDate() {
+    public int getDate() {
         return date;
     }
-    public void setDate(String date) {
+
+    public void setDate(int date) {
         this.date = date;
     }
 
