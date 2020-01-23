@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Type;
 import java.util.Calendar;
@@ -50,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_getFirstRecord)
     Button getFirstRecordBtn;
 
+    @BindView(R.id.main_dellFirst)
+    Button dellFirstRecordBtn;
+
     @BindView(R.id.main_getAllRecords)
     Button getAllUsersBtn;
 
@@ -59,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
     //db
     public static RecordDatabase recordDatabase;
-    //public static RecordDB recordDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,14 +93,28 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getFirstRecordBtn.setOnClickListener(view -> {
-
+            getFirstRecord();
         });
+        dellFirstRecordBtn.setOnClickListener(view ->{
+            dellFirstRecord();
+        });
+
         getAllUsersBtn.setOnClickListener(view -> {
-            getAllUsers();
+            getAllRecords();
         });
 
     }
 
+    //init
+    private void initDB() {
+        //TODO Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
+        // Change allowMainThreadQueries!!!
+        recordDatabase = Room.databaseBuilder(getApplicationContext(),
+                RecordDatabase.class, "userDB").allowMainThreadQueries().build();
+
+    }
+
+    //test methods
     private void addObject() {
         //generate object
         SosDTO sosDTO = new SosDTO();
@@ -114,8 +129,10 @@ public class MainActivity extends AppCompatActivity {
         recordDTO.setObjectType(sosDTO.getClass().getName());
         recordDTO.setSerializeObject(convertToJson(sosDTO));
 
+
+
         try {
-            convertFromRecordDto(recordDTO);
+          convertFromRecordDto(recordDTO);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -124,57 +141,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
     private void addRecord(RecordDTO recordDTO) {
         RecordDao recordDao = recordDatabase.testDao();
-        recordDao.addUser(recordDTO);
+        recordDao.addRecord(recordDTO);
         Toast.makeText(getApplicationContext(), "User added to DB successfully", Toast.LENGTH_LONG).show();
     }
-
-    private String convertToJson(Object object) {
-        String serializeObject = "serializeObject";
-        Gson gson = new Gson();
-        serializeObject = gson.toJson(object);
-        Log.d(TAG, "convertToJson: " + serializeObject);
-
-
-        return serializeObject;
-    }
-
-    ;
-
-    private Object convertFromRecordDto(RecordDTO recordDTO) throws ClassNotFoundException {
-
-        String serializeObject = recordDTO.getSerializeObject();
-        String objectType = recordDTO.getObjectType();
-        Gson gson = new Gson();
-
-        SosDTO restoredDTO =  gson.fromJson(serializeObject, (Type) Class.forName(objectType));
-
-        restoredDTO.getDate();
-
-        return new Object();
-    }
-
-    ;
-
-
-//    private void addRecordDTo() {
-//        Date currentDate = Calendar.getInstance().getTime();
-//        RecordDTO recordDTO = new RecordDTO();
-//
-//        recordDTO.setAdded(currentDate.toString());
-//        recordDTO.setSerializeObject("test Json");
-//
-//        RecordDao recordDao = (RecordDao) recordDB.iManager();
-//        recordDao.add(recordDTO);
-//    }
-
-    private void getAllUsers() {
+    private void getAllRecords() {
         List<RecordDTO> recordDTOList = MainActivity.recordDatabase.testDao().getAll();
         String info = " ";
         for (RecordDTO recordDTO : recordDTOList) {
-            int id = recordDTO.getUid();
+            int id = recordDTO.getId();
 
             String date = recordDTO.getDate().toString();
             String object = recordDTO.getSerializeObject();
@@ -191,39 +167,51 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    private void getAllRecords() {
-//        RecordDao recordDao = (RecordDao) recordDB.iManager();
-//
-//        List<RecordDTO> recordDTOList = recordDao.getAll();
-//
-//        String info = "";
-//        for (RecordDTO recordDTO : recordDTOList){
-//            long id = recordDTO.getId();
-//            String date = recordDTO.getAdded();
-//            String object = recordDTO.getSerializeObject();
-//
-//            info = info + "\n\n" +
-//                    "id " + id + "\n" +
-//                    "date " + date.toString() + "\n" +
-//                    "object " + object + "\n";
-//
-//            Log.d("Main", info);
-//
-//            outputText.setText(info);
-//
-//        }
-//
-//
-//    }
-//
+    private void getFirstRecord(){
+        RecordDTO firstRecordDTO = MainActivity.recordDatabase.testDao().getFirst();
 
-    private void initDB() {
-        //TODO Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
-        // Change allowMainThreadQueries!!!
-        recordDatabase = Room.databaseBuilder(getApplicationContext(),
-                RecordDatabase.class, "userDB").allowMainThreadQueries().build();
+
+        int id = firstRecordDTO.getId();
+        String date = firstRecordDTO.getDate().toString();
+        String object = firstRecordDTO.getSerializeObject();
+        String objectType = firstRecordDTO.getObjectType();
+
+
+        String info = " ";
+        info = info + "\n" +
+                "id " + id + "\n" +
+                "date " + date + "\n" +
+                "object " + object + "\n" +
+                "object type " + objectType + "\n";
+        Log.d("Main", info);
+
+        outputText.setText(info);
+
 
     }
+    private void dellFirstRecord(){}
+
+    //lib methods
+
+    private String convertToJson(Object object) {
+        Gson gson = new Gson();
+        String serializeObject = gson.toJson(object);
+        Log.d(TAG, "convertToJson: " + serializeObject);
+        return serializeObject;
+    };
+    private Object convertFromRecordDto(RecordDTO recordDTO) throws ClassNotFoundException {
+        String serializeObject = recordDTO.getSerializeObject();
+        String objectType = recordDTO.getObjectType();
+        Gson gson = new Gson();
+
+        //Restore sosDTO
+        SosDTO restoredDTO =  gson.fromJson(serializeObject, (Type) Class.forName(objectType));
+        restoredDTO.getDate();
+
+
+        return new Object();
+    };
+
 
 
 }

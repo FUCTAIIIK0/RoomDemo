@@ -14,12 +14,14 @@ public interface RecordDao {
     @Query("SELECT * FROM object")
     List<RecordDTO> getAll();
 
+    @Query("SELECT * FROM object WHERE id = :id")
+    RecordDTO getById(int id);
 
-//    @Query("SELECT * FROM USER WHERE uid = :id")
-//    RecordDTO getById(long id);
+    @Query("SELECT *FROM object WHERE id = 1")
+    RecordDTO getFirst();
+
     @Insert
-    void addUser(RecordDTO recordDTO);
-
+    void addRecord(RecordDTO recordDTO);
 
 
     @Update

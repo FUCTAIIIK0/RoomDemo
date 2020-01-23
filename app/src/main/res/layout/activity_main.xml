@@ -69,6 +69,13 @@
                 android:text="get first" />
 
             <Button
+                android:id="@+id/main_dellFirst"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="dell first" />
+
+            <Button
                 android:id="@+id/main_getAllRecords"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

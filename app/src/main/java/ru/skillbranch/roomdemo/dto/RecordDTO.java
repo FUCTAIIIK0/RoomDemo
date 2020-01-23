@@ -6,14 +6,13 @@ import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Date;
 
 @Entity(tableName = "object")
 public class RecordDTO {
 
     @NotNull
     @PrimaryKey(autoGenerate = true)
-    private int uid;
+    private int id;
 
     @ColumnInfo(name = "date")
     private String date;
@@ -28,11 +27,11 @@ public class RecordDTO {
 
     }
 
-    public int getUid() {
-        return uid;
+    public int getId() {
+        return id;
     }
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDate() {
@@ -55,5 +54,4 @@ public class RecordDTO {
     public void setObjectType(String objectType) {
         this.objectType = objectType;
     }
-
 }
