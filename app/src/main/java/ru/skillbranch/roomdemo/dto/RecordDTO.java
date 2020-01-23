@@ -6,6 +6,8 @@ import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Date;
+
 @Entity(tableName = "object")
 public class RecordDTO {
 

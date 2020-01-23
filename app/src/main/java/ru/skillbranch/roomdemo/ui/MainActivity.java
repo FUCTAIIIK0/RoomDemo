@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,10 +59,12 @@ public class MainActivity extends AppCompatActivity {
         initDB();
 
         addRecordBtn.setOnClickListener(view -> {
-            String date = dateEdit.getText().toString();
+            //String date = dateEdit.getText().toString();
             String object = objectEdit.getText().toString();
-//            String date = "date";
-//            String object = "object";
+
+            String date = Calendar.getInstance().getTime().toString();
+
+
 
             //addUser
             RecordDTO recordDTO = new RecordDTO();
@@ -106,10 +110,11 @@ public class MainActivity extends AppCompatActivity {
         String info = " ";
         for (RecordDTO recordDTO : recordDTOList) {
             int id = recordDTO.getUid();
-            String date = recordDTO.getDate();
+
+            String date = recordDTO.getDate().toString();
             String object = recordDTO.getSerializeObject();
 
-            info = info + "\n\n" +
+            info = info + "\n" +
                     "id " + id + "\n" +
                     "date " + date + "\n" +
                     "object " + object + "\n";
