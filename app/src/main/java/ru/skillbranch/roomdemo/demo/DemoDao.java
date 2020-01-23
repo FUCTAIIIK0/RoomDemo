@@ -7,24 +7,24 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import ru.skillbranch.roomdemo.dto.UserDTO;
+import ru.skillbranch.roomdemo.dto.RecordDTO;
 
 @androidx.room.Dao
-public interface Dao {
-    @Query("SELECT * FROM USER")
-    List<UserDTO> getAll();
+public interface DemoDao {
+    @Query("SELECT * FROM object")
+    List<RecordDTO> getAll();
 
 
 //    @Query("SELECT * FROM USER WHERE uid = :id")
-//    UserDTO getById(long id);
+//    RecordDTO getById(long id);
     @Insert
-    void addUser(UserDTO userDTO);
+    void addUser(RecordDTO recordDTO);
 
 
 
     @Update
-    void update(UserDTO userDTO);
+    void update(RecordDTO recordDTO);
 
     @Delete
-    void delete(UserDTO userDTO);
+    void delete(RecordDTO recordDTO);
 }

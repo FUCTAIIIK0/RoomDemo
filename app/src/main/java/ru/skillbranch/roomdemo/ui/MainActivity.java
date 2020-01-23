@@ -15,9 +15,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.skillbranch.roomdemo.R;
-import ru.skillbranch.roomdemo.demo.Dao;
-import ru.skillbranch.roomdemo.demo.Demo1Database;
-import ru.skillbranch.roomdemo.dto.UserDTO;
+import ru.skillbranch.roomdemo.demo.DemoDao;
+import ru.skillbranch.roomdemo.demo.DemoDatabase;
+import ru.skillbranch.roomdemo.dto.RecordDTO;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_id)
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     Button getAddRecordBtn;
 
     //db
-    public static Demo1Database demo1Database;
+    public static DemoDatabase demoDatabase;
     //public static RecordDB recordDB;
 
     @Override
@@ -77,12 +77,10 @@ public class MainActivity extends AppCompatActivity {
             companyID = companyIDEdit.getText().toString();
 
             //addUser
-            UserDTO userDTO = new UserDTO();
-            userDTO.setFirstName(firstName);
-            userDTO.setLastName(lastName);
-            userDTO.setCityID(cityID);
-            userDTO.setCompanyID(companyID);
-            addUser(userDTO);
+            RecordDTO recordDTO = new RecordDTO();
+            recordDTO.setDate(firstName);
+            recordDTO.setSerializeObject(lastName);
+            addUser(recordDTO);
 
             //count++;
             Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
@@ -107,10 +105,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void addUser(UserDTO userDTO) {
-        Dao dao = demo1Database.testDao();
-        dao.addUser(userDTO);
-        //MainActivity.demo1Database.testDao().addUser(userDTO);
+    private void addUser(RecordDTO recordDTO) {
+        DemoDao demoDao = demoDatabase.testDao();
+        demoDao.addUser(recordDTO);
+        //MainActivity.demoDatabase.testDao().addUser(recordDTO);
         Toast.makeText(getApplicationContext(), "User added to DB successfully", Toast.LENGTH_LONG).show();
     }
 
@@ -126,14 +124,12 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     private void getAllUsers() {
-        List<UserDTO> userDTOList = MainActivity.demo1Database.testDao().getAll();
+        List<RecordDTO> recordDTOList = MainActivity.demoDatabase.testDao().getAll();
         String info = " ";
-        for (UserDTO user : userDTOList) {
+        for (RecordDTO user : recordDTOList) {
             int id = user.getUid();
-            String firstName = user.getFirstName();
-            String lastName = user.getLastName();
-            String cityID = user.getCityID();
-            String companyID = user.getCompanyID();
+            String firstName = user.getDate();
+            String lastName = user.getSerializeObject();
 
             info = info + "\n\n" +
                     "id " + id + "\n" +
@@ -178,8 +174,8 @@ public class MainActivity extends AppCompatActivity {
     private void initDB() {
         //TODO Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
         // Change allowMainThreadQueries!!!
-        demo1Database = Room.databaseBuilder(getApplicationContext(),
-                Demo1Database.class, "userDB").allowMainThreadQueries().build();
+        demoDatabase = Room.databaseBuilder(getApplicationContext(),
+                DemoDatabase.class, "userDB").allowMainThreadQueries().build();
 
 //        recordDB = Room.databaseBuilder(getApplicationContext(),
 //                RecordDB.class, "userDB").allowMainThreadQueries().build();

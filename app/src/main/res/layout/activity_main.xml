@@ -31,7 +31,7 @@
                 android:layout_weight="1"
                 android:autoText="false"
                 android:ems="10"
-                android:hint="firstName"
+                android:hint="date"
                 android:inputType="textPersonName"
                 android:text="John"
                 android:textSize="18sp" />
