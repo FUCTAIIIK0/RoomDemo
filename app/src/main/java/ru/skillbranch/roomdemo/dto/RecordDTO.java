@@ -21,6 +21,9 @@ public class RecordDTO {
     @ColumnInfo(name = "serializeObject")
     private String serializeObject;
 
+    @ColumnInfo(name = "ObjectType")
+    private String objectType;
+
     public RecordDTO() {
 
     }
@@ -44,6 +47,13 @@ public class RecordDTO {
     }
     public void setSerializeObject(String serializeObject) {
         this.serializeObject = serializeObject;
+    }
+
+    public String getObjectType() {
+        return objectType;
+    }
+    public void setObjectType(String objectType) {
+        this.objectType = objectType;
     }
 
 }

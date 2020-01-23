@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,6 +24,9 @@ import ru.skillbranch.roomdemo.dto.RecordDTO;
 import ru.skillbranch.roomdemo.dto.SosDTO;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final String TAG ="Main";
+
     @BindView(R.id.main_id)
     TextView id;
     //private int count = 0;
@@ -122,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String convertToRecordDTo(Object object){
         String serializeObject ="serializeObject";
+        Gson gson = new Gson();
+        serializeObject = gson.toJson(object);
+        Log.d(TAG, "convertToRecordDTo: "+serializeObject);
 
         return serializeObject;
     };
