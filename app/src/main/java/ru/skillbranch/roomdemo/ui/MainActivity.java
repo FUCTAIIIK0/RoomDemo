@@ -11,7 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.List;
 
@@ -25,7 +27,7 @@ import ru.skillbranch.roomdemo.dto.SosDTO;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG ="Main";
+    private final String TAG = "Main";
 
     @BindView(R.id.main_id)
     TextView id;
@@ -73,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
             String date = Calendar.getInstance().getTime().toString();
 
 
-
             //addRecord
             RecordDTO recordDTO = new RecordDTO();
             recordDTO.setDate(date);
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             //id.setText(String.valueOf(count));
 
         });
-        addObjectbtn.setOnClickListener(view ->{
+        addObjectbtn.setOnClickListener(view -> {
             addObject();
         });
 
@@ -113,10 +114,13 @@ public class MainActivity extends AppCompatActivity {
         recordDTO.setObjectType(sosDTO.getClass().getName());
         recordDTO.setSerializeObject(convertToJson(sosDTO));
 
-        convertFromRecordDto(recordDTO);
+        try {
+            convertFromRecordDto(recordDTO);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         addRecord(recordDTO);
-
 
 
     }
@@ -127,28 +131,32 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "User added to DB successfully", Toast.LENGTH_LONG).show();
     }
 
-    private String convertToJson(Object object){
-        String serializeObject ="serializeObject";
+    private String convertToJson(Object object) {
+        String serializeObject = "serializeObject";
         Gson gson = new Gson();
         serializeObject = gson.toJson(object);
-        Log.d(TAG, "convertToJson: "+serializeObject);
+        Log.d(TAG, "convertToJson: " + serializeObject);
 
 
         return serializeObject;
-    };
+    }
 
-    private Object convertFromRecordDto(RecordDTO recordDTO){
+    ;
+
+    private Object convertFromRecordDto(RecordDTO recordDTO) throws ClassNotFoundException {
 
         String serializeObject = recordDTO.getSerializeObject();
         String objectType = recordDTO.getObjectType();
         Gson gson = new Gson();
 
-        SosDTO restoredDTO = gson.fromJson(serializeObject,SosDTO.class);
+        SosDTO restoredDTO =  gson.fromJson(serializeObject, (Type) Class.forName(objectType));
 
-        recordDTO.getDate();
+        restoredDTO.getDate();
 
-      return new Object();
-    };
+        return new Object();
+    }
+
+    ;
 
 
 //    private void addRecordDTo() {
@@ -175,9 +183,9 @@ public class MainActivity extends AppCompatActivity {
             info = info + "\n" +
                     "id " + id + "\n" +
                     "date " + date + "\n" +
-                    "object " + object + "\n"+
+                    "object " + object + "\n" +
                     "object type " + objectType + "\n";
-                    Log.d("Main", info);
+            Log.d("Main", info);
             outputText.setText(info);
         }
 
