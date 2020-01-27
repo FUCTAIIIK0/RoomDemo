@@ -18,6 +18,10 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url 'http://development:EKrbH9U6t5@maven.hostrent.ru'
+            name 'development'
+        }
         
     }
 }

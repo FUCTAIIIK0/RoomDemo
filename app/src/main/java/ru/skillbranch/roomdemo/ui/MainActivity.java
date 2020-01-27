@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Get first and show to output
+    //
     private Record getFirstRecordByID() {
         Record firstRecord = MainActivity.recordDatabase.testDao().getFirstByID();
 
@@ -190,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
 
         return firstRecord;
     }
-
     private Record getFirstRecordByTime() {
         Record firstRecord = MainActivity.recordDatabase.testDao().getFirstRecordByTime();
 
@@ -212,18 +211,12 @@ public class MainActivity extends AppCompatActivity {
 
         return firstRecord;
     }
-
-    ;
-
     private void dellFirstRecordBYTime() {
         Record firstRecord = getFirstRecordByTime();
         if (firstRecord != null) {
             MainActivity.recordDatabase.testDao().delete(firstRecord);
         }
-
     }
-
-    //lib methods
 
     private String convertToJson(Object object) {
         Gson gson = new Gson();
@@ -231,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "convertToJson: " + serializeObject);
         return serializeObject;
     };
-
     private Object convertFromRecordDto(Record record) throws ClassNotFoundException {
         String serializeObject = record.getSerializeObject();
         String objectType = record.getObjectType();
